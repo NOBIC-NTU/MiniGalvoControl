@@ -9,7 +9,15 @@ static uint64_t _stamp;
 //const static int pwm_pin_dataX = 19;
 //const static int pwm_pin_dataY = 14;
 
-
+/* FYI: c12f0001c22f0001 to set xy2-100 control
+ *  Command:  8x2F 0000  Read Command Input Source
+ *  Response: 552F yyyy
+ *  Command:  Cx2F yyyy  Write Command Input Source
+ *  Response: AA2F yyyy
+ *  x = Axis indicator
+ *  yyyy = Input Source: 00 = Analog; 1 = XY2-100-compatible digital; 2 = FB4-compatible digital
+ *  0 is the default value
+ */
 // Keep track of last commanded position
 int16_t x = -1;
 int16_t y = 1;
@@ -104,12 +112,6 @@ void galvogo()  {
   // Serial.printf("x,y = %05d,%05d\n", x,y);
 }
 
-void nanosleep(uint64_t ns) {
-  uint64_t _st = nanos();
-  while(nanos() - _st < ns);
-  // Serial.printf("%" PRIu64 " ns\t", nanos()-_stamp);
-  // while(1); takes about 75ns
-}
 void sweepx() {
   for (x=-2500;x<2501;x+=1) {
     galvogo();

@@ -14,6 +14,13 @@ uint64_t nanos()  // Code by luni @ https://forum.pjrc.com/threads/60493-A-Highe
     return (highValue | newCycles) * (1E9/F_CPU);
 }
 
+void nanosleep(uint64_t ns) {
+  uint64_t _st = nanos();
+  while(nanos() - _st < ns);
+  // Serial.printf("%" PRIu64 " ns\t", nanos()-_stamp);
+  // while(1); takes about 75ns
+}
+
 // EXAMPLE 
 //
 //void setup()
