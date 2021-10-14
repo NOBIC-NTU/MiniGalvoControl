@@ -71,7 +71,12 @@ void XY2_100::begin()
   IOMUXC_SW_MUX_CTL_PAD_GPIO_B0_01 = 1; // sets up the "external pin" for QT1 Timer1 (see R.M. page 309).
 
   //start QT1 Timer1
-  TMR1_CTRL1 = 0b0011000000100011;      // 001(Count rising edges Primary Source),1000(IP Bus Clock),00 (Secondary Source = 0),
+  TMR1_CTRL1 = 0b0011000000100011;      // 001(Count rising edges Primary Source),1000(IP Bus Clock, prescaler 1),
+                                        // 00 (Secondary Source = 0), 0 (Count once=0 continuous=1),
+                                        // 1 (Count length: until FFFF =0, until compare =1)
+                                        // 0 (Count direction: count up =0, count down =1)
+                                        // 0 (Co-channel init: cannot =0, maye force =1)
+                                        // 011 (output mode: Toggle OFLAG output on success compare=011)
   TMR1_ENBL = 0b0000000000000010;       // enable Timer1
  
   //prepare interrupt parameters

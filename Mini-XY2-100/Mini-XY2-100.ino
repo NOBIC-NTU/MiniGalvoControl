@@ -19,8 +19,8 @@ static uint64_t _stamp;
  *  0 is the default value
  */
 // Keep track of last commanded position
-int16_t x = -1;
-int16_t y = 1;
+int16_t x = 0;
+int16_t y = 0;
 
 // Temp variable
 char msgbuf[256]; // line buffer to print messages
@@ -29,6 +29,13 @@ void setup() {
   Serial.begin(115200);
   galvo.begin();
   _stamp = nanos();
+}
+
+void help_message() {
+  Serial.println("# To turn on XY2-100 and set proper zero:");
+  Serial.println("c12f0001c22f0001c13a0089c23a0070");
+  Serial.println("# To turn off XY2-100 and set proper zero:");
+  Serial.println("c12f0000c22f0000c13a0089c23a0070");
 }
 
 void listen_command() {
@@ -52,7 +59,9 @@ void parse_command(char *cmd) {
   if (strcmp(tok, "??") == 0) {
     sprintf(msgbuf, "x,y: %d,%d\n", x,y);
     Serial.print(msgbuf);
-  } else if (strcmp(tok, "sweepx") == 0) {
+  } else if (strcmp(tok, "help") == 0) {
+    help_message();
+  }  else if (strcmp(tok, "sweepx") == 0) {
     sprintf(msgbuf, "%s!\n", "sweepx");
     Serial.print(msgbuf);
     sweepx();
@@ -135,21 +144,21 @@ void sweepy() {
   }
 }
 void togglex(){
-  for (int i=0;i<100;i++) {
+  for (int i=0;i<1000;i++) {
     x = -x;
     galvogo();
     delay(1);
   }
 }
 void toggley(){
-  for (int i=0;i<100;i++) {
+  for (int i=0;i<1000;i++) {
     y = -y;
     galvogo();
     delay(1);
   }
 }
 void togglesquare() {
-  for (int i=0;i<100;i++) {
+  for (int i=0;i<1000;i++) {
     y = -y;
     galvogo();
     delay(1);
