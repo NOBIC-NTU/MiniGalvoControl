@@ -32,8 +32,8 @@ int16_t s = -500; // (s)outh point (smallest y)
 int16_t n = 500; // (n)orth point (biggest y)
 int16_t dx = 1; // delta x (jog this many units per dt)
 int16_t dy = 1; // delta y (jog this many units per dt)
-uint64_t tx = 10*1000; // delta (t)ime (update pos every 10000000 ns = 10 ms)
-uint64_t ty = 10*1000; // delta (t)ime (update pos every 10000000 ns = 10 ms)
+uint64_t tx = 10*1000'000'000; // delta (t)ime (update pos every 10000000 ns = 10 ms)
+uint64_t ty = 10*1000'000'000; // delta (t)ime (update pos every 10000000 ns = 10 ms)
 uint64_t tlisten = 250000000; // delta (t)ime (update listen commands every 250ms)
 uint64_t last_tx = 0; // last time tx was passed
 uint64_t last_ty = 0; // last time ty was passed
