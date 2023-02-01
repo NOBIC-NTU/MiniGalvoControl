@@ -59,8 +59,8 @@ const int led_pin = LED_BUILTIN;// debug using the led
 bool led_state = LOW;
 
 void setup() {
-  Serial.begin(115200);
-  Serial5.begin(256000); // scanner max
+  Serial.begin(9600);
+  Serial2.begin(256000); // scanner max
   pinMode(led_pin, OUTPUT);
   galvo.begin();
   last_tx = nanos(); // last time dt was passed is now
@@ -238,10 +238,10 @@ void parse_command(char *words) {
     byte cmd2[] = {0xC2, 0x2F, 0x00, 0x01};
     byte cmd3[] = {0xC1, 0x3A, 0x00, 0x00};
     byte cmd4[] = {0xC2, 0x3A, 0x00, 0x00};
-    Serial5.write(cmd1, sizeof(cmd1));
-    Serial5.write(cmd2, sizeof(cmd2));
-    Serial5.write(cmd3, sizeof(cmd3));
-    Serial5.write(cmd4, sizeof(cmd4));
+    Serial2.write(cmd1, sizeof(cmd1));
+    Serial2.write(cmd2, sizeof(cmd2));
+    Serial2.write(cmd3, sizeof(cmd3));
+    Serial2.write(cmd4, sizeof(cmd4));
     sprintf(msgbuf, "sm_init: '%x %x %x %x'\n", 0xC12F0001, 0xC22F0001, 0xC13A0000, 0xC23A0000);
   } else if (strcmp(cmd, "help") == 0) {
     msg_help();
